@@ -691,6 +691,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     --pad:clamp(24px,7vw,100px);
   }
   *{box-sizing:border-box}
+  p{margin:0}
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--ink);color:var(--cream);
        font-family:var(--font-body);font-weight:300;line-height:1.6;
@@ -777,6 +778,13 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .side-photo:hover img{transform:scale(1.03)}
   .side-photo .blurb{margin-top:10px;font-family:var(--font-body);font-size:12.5px;
        color:var(--muted);line-height:1.55}
+  .photo-frame{position:relative;border-radius:2px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.45)}
+  .photo-frame img{box-shadow:none}
+  .photo-label{position:absolute;left:0;right:0;bottom:0;padding:14px 18px;
+       background:linear-gradient(to top, rgba(0,0,0,.78), transparent);
+       font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.14em;
+       text-transform:uppercase;color:#fff;pointer-events:none}
+  .side-photos.tall .side-photo img{height:270px}
   .stat-callout-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:40px auto 0;max-width:900px}
   .stat-callout{background:var(--navy-lt);border-left:3px solid var(--red);padding:26px 26px}
   .stat-callout-text{font-family:var(--font-cormorant);font-style:italic;font-weight:400;
@@ -849,7 +857,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .brand-section{background:var(--blue);position:relative;overflow:hidden}
   .brand-section::before{content:"";position:absolute;top:-20%;right:-10%;width:60%;height:140%;
        background:radial-gradient(circle, rgba(255,255,255,.06), transparent 70%);pointer-events:none}
-  .brand-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin:40px 0 56px}
+  .brand-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:40px 0 56px}
   .brand-stat{background:rgba(255,255,255,.1);padding:28px 20px;text-align:center}
   .brand-stat .v{font-family:var(--font-cormorant);font-size:clamp(28px,3vw,44px);color:#fff}
   .brand-stat .l{font-family:var(--font-body);font-size:11px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:6px;letter-spacing:.08em}
@@ -925,10 +933,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
          style="position:absolute;left:0;right:0;top:-12%;width:100%;height:124%;object-fit:cover;filter:brightness(.72);will-change:transform" />
     <div style="position:absolute;inset:0;background:linear-gradient(to top, var(--ink) 0%, rgba(var(--ink-rgb),.55) 28%, transparent 52%)"></div>
 
-    <div style="position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);
+    <div style="position:absolute;top:16%;right:var(--pad);
          filter:drop-shadow(0 12px 40px rgba(0,0,0,.35))">
       <img src="images/logo-courtyard.svg" alt="Courtyard by Marriott"
-           style="width:clamp(240px,30vw,400px);height:auto;display:block" />
+           style="width:clamp(280px,26vw,380px);height:auto;display:block" />
     </div>
 
     <div style="position:absolute;bottom:0;left:0;right:0;padding-bottom:clamp(36px,5vh,64px);
@@ -949,15 +957,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <!-- OVERVIEW -->
   <section class="section" id="overview" style="background:var(--navy)">
     <div class="wrap">
-      <div class="two-col" style="align-items:center">
-        <h2 class="h2" style="margin:0">Second-to-none location in<br><span class="em" style="opacity:.8;color:var(--off-white)">downtown St. Louis</span></h2>
+      <div>
         <img src="images/logo-courtyard-white.svg" alt="Courtyard by Marriott"
-             style="width:clamp(180px,16vw,240px);height:auto;display:block;margin:0 auto" />
+             style="width:clamp(220px,22vw,320px);height:auto;display:block" />
       </div>
       <div class="two-col" style="margin-top:48px">
         <div>
           <p class="lead">Hodges Ward Elliott is pleased to present the opportunity to acquire the fee-simple interest in the 165-room Courtyard St. Louis Downtown/Convention Center. Situated in the heart of downtown and directly adjacent to the America&rsquo;s Center Convention Complex, the Property is ideally positioned to capitalize on business and leisure travel alike.</p>
-          <p class="lead" style="margin-top:20px">The hotel is surrounded by 105 million square feet of office and industrial space within a five-mile radius, providing consistent year-round demand. The Courtyard represents a compelling opportunity to acquire an asset with a second-to-none location, <span class="em">offered free and clear of existing management and financing.</span></p>
+          <p class="lead" style="margin-top:20px">The hotel is surrounded by 105 million square feet of office and industrial space within a five-mile radius, providing consistent year-round demand. The Courtyard represents a compelling opportunity to acquire an asset with a second-to-none location.</p>
           <div style="margin-top:36px;display:flex;gap:16px;flex-wrap:wrap">
             <a href="#" class="btn btn-cta">Sign CA Online</a>
             <a href="#" class="btn btn-ghost">Download CA (DOCX)</a>
@@ -974,10 +981,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
             <div class="stat-cell"><div class="stat-value">24</div><div class="stat-label">Stories</div></div>
             <div class="stat-cell"><div class="stat-value">1,144 SF</div><div class="stat-label">Meeting Space</div></div>
             <div class="stat-cell"><div class="stat-value">The Bistro</div><div class="stat-label">F&amp;B</div></div>
-            <div class="stat-cell full"><div class="stat-value" style="font-size:17px">Fitness Center, Convenience Store, Business Center, Service Request</div><div class="stat-label">Amenities</div></div>
+            <div class="stat-cell full"><div class="stat-value" style="font-size:17px">Fitness Center, Convenience Store, Business Center</div><div class="stat-label">Amenities</div></div>
             <div class="stat-cell"><div class="stat-value">Fee Simple</div><div class="stat-label">Interest Conveyed</div></div>
             <div class="stat-cell"><div class="stat-value">Unencumbered</div><div class="stat-label">Management</div></div>
-            <div class="stat-cell full"><div class="stat-value">Non-Union</div><div class="stat-label">Labor</div></div>
           </div>
         </div>
       </div>
@@ -1024,9 +1030,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <!-- HIGHLIGHTS INTRO -->
   <section class="section" id="highlights" style="background:var(--ink)">
     <div class="wrap">
-      <div class="highlight-eyebrow">Investment Highlights</div>
-      <h2 class="h2" style="margin-top:14px">Why St. Louis. Why Now.</h2>
-      <p class="lead" style="max-width:64ch;margin-top:18px">A convergence of location, brand, and market timing defines this offering.</p>
+      <h2 class="h2" style="font-size:clamp(40px,5.4vw,66px)">Investment Highlights</h2>
     </div>
   </section>
 
@@ -1040,8 +1044,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <h2 class="h2">Adjacent to America&rsquo;s Center Convention Complex</h2>
         <div class="two-col" style="margin-top:32px">
           <p class="lead" style="max-width:68ch;margin-top:0">The Property is situated adjacent to America&rsquo;s Center Convention Complex, a vital economic engine for the St. Louis region with the designation of &ldquo;Best Convention Center &ndash; Midwest&rdquo; in the 2022 Stella Awards. The complex spans over 2.2 million square feet of total space, including 574,000 contiguous square feet of exhibit space across seven exhibit halls, complemented by 95 meeting rooms, a 28,000-square-foot ballroom, the 1,400-seat Ferrara Theatre, and The Dome at America&rsquo;s Center with a seating capacity of 67,000 seats. On an annual basis, the complex hosts an average of 109 events generating over 600,000 attendees, 350,000 hotel room nights, and $258 million in direct spending for the regional economy. Following a recently completed expansion that added a new 72,000-square-foot exhibit hall and more than doubled the number of enclosed loading docks, America&rsquo;s Center is well-positioned to attract larger, higher-profile events, directly benefiting the Hotel&rsquo;s convention-driven demand. The Courtyard is the closest asset to the convention complex, making it a reliable choice for business and group travelers visiting the destination.</p>
-          <img src="images/highlight-01-photo.jpg" alt="America&rsquo;s Center Convention Complex street view"
-               style="width:100%;height:100%;min-height:320px;object-fit:cover;object-position:50% 32%;border-radius:2px;box-shadow:0 24px 80px rgba(0,0,0,.45)" />
+          <div class="photo-frame" style="height:100%;min-height:320px">
+            <img src="images/highlight-01-photo.jpg" alt="America&rsquo;s Center Convention Complex street view"
+                 style="width:100%;height:100%;object-fit:cover;object-position:50% 32%;display:block" />
+            <div class="photo-label">Courtyard St. Louis Downtown/Convention Center</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1054,19 +1061,21 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <h2 class="h2">Extensive Corporate Demand</h2>
       <div class="two-col" style="margin-top:24px">
         <p class="lead" style="max-width:68ch;margin-top:0">The St. Louis metropolitan area is the Midwest&rsquo;s economic and corporate hub, anchoring the region with a GDP of $226.5 billion, an increase of 7.1% year-over-year, ranking 16th nationally among U.S. metro areas. The area benefits from a diversified economic base with significant concentrations in healthcare, aerospace and defense, financial services, energy, agribusiness, and manufacturing. 22 companies are listed on the Fortune 1000, Forbes Global 2000, and Forbes list of America&rsquo;s Largest Private Companies, a concentration that exceeds regional peers such as Indianapolis, Nashville, and Kansas City. The Hotel sits at the center of this corporate activity, with approximately 105 million square feet of office and industrial space within a five-mile radius, including significant operations from major employers such as Peabody Energy, Stifel Financial, Nestl&eacute; Purina PetCare Company, Cargill, Bunge, Barnes-Jewish Healthcare System, SSM Health, and Ameren Corporation. In addition, aerospace manufacturing alone represents a $5.1 billion industry within the region, with a job concentration 378% above the national average, anchored by Boeing&rsquo;s substantial St. Louis presence. This dense concentration of corporate activity represents a substantial and reliable demand base for the Hotel.</p>
-        <div class="side-photos">
+        <div class="side-photos tall">
           <div class="side-photo">
-            <img src="images/highlight-02-photo-1.jpg" alt="Two Boeing T-X jets flying over downtown St. Louis" />
-            <div class="blurb">Boeing T-X trainer jets on a flight over downtown St. Louis, a reflection of the region&rsquo;s deep aerospace manufacturing presence.</div>
+            <div class="photo-frame">
+              <img src="images/highlight-02-photo-1.jpg" alt="Two Boeing T-X jets flying over downtown St. Louis" />
+              <div class="photo-label">Boeing T-X Jets</div>
+            </div>
           </div>
           <div class="side-photo">
-            <img src="images/highlight-02-photo-2.jpg" alt="SSM Health hospital emergency and trauma center" />
-            <div class="blurb">SSM Health&rsquo;s emergency and trauma center, one of the major healthcare employers anchoring the region&rsquo;s corporate demand base.</div>
+            <div class="photo-frame">
+              <img src="images/highlight-02-photo-2.jpg" alt="SSM Health hospital emergency and trauma center" />
+              <div class="photo-label">SSM Health</div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="highlight-callout">&ldquo;The Hotel sits at the center of this corporate activity, with approximately 105 million square feet of office and industrial space within a five-mile radius.&rdquo;</div>
 
       <div class="eyebrow" style="margin-top:48px;margin-bottom:20px">Anchored by Major Regional Employers</div>
       <div class="logo-grid">
@@ -1090,14 +1099,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <h2 class="h2">Surrounded by National Tourist Attractions</h2>
       <div class="two-col" style="margin-top:24px">
         <p class="lead" style="max-width:68ch;margin-top:0">The Hotel is within walking distance of numerous world-class tourist attractions due to its downtown location. Less than a mile away, The Gateway Arch stands as the nation&rsquo;s tallest man-made monument and the city&rsquo;s defining icon at 630 feet tall, drawing 2.4 million visitors in 2023. The broader Gateway Arch National Park experience encompasses six museum galleries, a tram ride to the top, a virtual reality theater, riverboat cruises along the Mississippi, and 91 acres of urban green space, all free or modestly priced. Steps away, Busch Stadium is home to the storied St. Louis Cardinals, with Ballpark Village, a vibrant dining, entertainment, and retail district, anchoring the surrounding blocks. Also nearby, the Enterprise Center hosts the St. Louis Blues of the National Hockey League, while the Stifel Theatre and the Fabulous Fox Theatre bring touring Broadway productions and world-class performances to downtown audiences. The City Museum, a one-of-a-kind attraction housed in a former shoe factory, features man-made caves, a ten-story slide, and immersive architectural installations, drawing visitors of all ages. St. Louis Union Station, a National Historic Landmark, has been reimagined as a destination, housing the St. Louis Aquarium, restaurants, and the St. Louis Wheel. Collectively, St. Louis offers more free world-class attractions than any American city outside of Washington, D.C., making it a compelling leisure destination that drives sustained visitation and lodging demand throughout the year.</p>
-        <div class="side-photos">
+        <div class="side-photos tall">
           <div class="side-photo">
-            <img src="images/highlight-03-photo-1.jpg" alt="Ballpark Village" />
-            <div class="blurb">Ballpark Village, the vibrant dining, entertainment, and retail district anchoring Busch Stadium.</div>
+            <div class="photo-frame">
+              <img src="images/highlight-03-photo-1.jpg" alt="Ballpark Village" />
+              <div class="photo-label">Ballpark Village / Busch Stadium</div>
+            </div>
           </div>
           <div class="side-photo">
-            <img src="images/highlight-03-photo-2.jpg" alt="St. Louis Aquarium at Union Station" />
-            <div class="blurb">The St. Louis Aquarium at Union Station, part of the reimagined National Historic Landmark.</div>
+            <div class="photo-frame">
+              <img src="images/highlight-03-photo-2.jpg" alt="The Gateway Arch" />
+              <div class="photo-label">The Gateway Arch</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1120,7 +1133,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
            style="width:100%;height:auto;display:block" />
       <div class="location-split">
         <div class="location-info">
-          <h2 class="h2" style="margin-top:0">At the heart of<br>downtown St. Louis</h2>
+          <h2 class="h2" style="margin-top:0">At the Heart of<br>Downtown St. Louis</h2>
           <p class="lead" style="margin-top:20px">The Courtyard sits at the epicenter of downtown St. Louis, steps from the America&rsquo;s Center Convention Complex and within walking distance of the region&rsquo;s defining attractions. From the Gateway Arch to Busch Stadium and the reimagined Union Station, the Hotel&rsquo;s location places guests at the heart of everything the destination offers.</p>
           <ul class="callout-list" id="location-callouts">
             <li data-index="0"><span class="dot"></span> Adjacent to America&rsquo;s Center Convention Complex</li>
@@ -1188,12 +1201,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <p class="lead" style="max-width:68ch;margin-top:0">The St. Louis hospitality market is experiencing one of the most impressive performance recoveries of any major U.S. city, underpinned by a powerful combination of renewed convention activity, growing corporate demand, and surging leisure visitation. Through November 2025, St. Louis led all top 25 U.S. markets in both occupancy growth at 6.7% and demand growth at 5.8%, while achieving the second-highest RevPAR gain in the nation at 9.7%. Since the beginning of Q2 2025, following the reopening of America&rsquo;s Center Convention Complex after its transformative renovation, St. Louis RevPAR advanced 12.7% on a 5.2% occupancy increase and 3.2% ADR growth. In Q3 2025 alone, St. Louis posted the strongest year-over-year RevPAR growth in the nation at 13%, a testament to the market&rsquo;s momentum. The St. Louis CBD hospitality market continues to perform remarkably well with CoStar reporting May 2026 occupancy gains of 8.6% year-over-year and ADR increases of 2.9% year-over-year, resulting in RevPAR growth of 11.7% over the prior year. The confluence of a fully renovated convention center, a thriving corporate base, and a downtown with national attractions provides a strong foundation for the St. Louis hotel market heading into the years ahead.</p>
         <div class="side-photos">
           <div class="side-photo">
-            <img src="images/highlight-04-photo-1.jpg" alt="Downtown St. Louis skyline" />
-            <div class="blurb">Downtown St. Louis&rsquo;s skyline, anchored by the historic Old Courthouse dome.</div>
+            <div class="photo-frame">
+              <img src="images/highlight-04-photo-1.jpg" alt="Downtown St. Louis skyline" />
+              <div class="photo-label">Downtown St. Louis</div>
+            </div>
           </div>
           <div class="side-photo">
-            <img src="images/highlight-04-photo-2.jpg" alt="Energizer Park" />
-            <div class="blurb">Energizer Park, home of St. Louis CITY SC, part of the region&rsquo;s growing sports and entertainment footprint.</div>
+            <div class="photo-frame">
+              <img src="images/highlight-04-photo-2.jpg" alt="Energizer Park" />
+              <div class="photo-label">Energizer Park, home of St. Louis CITY SC</div>
+            </div>
           </div>
         </div>
       </div>
@@ -1212,7 +1229,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <div>
           <div class="highlight-eyebrow">Investment Highlight &mdash; 05 / 06</div>
           <h2 class="h2">Upside Potential Through Post-Renovation Ramp-Up</h2>
-          <p class="lead" style="max-width:68ch">The Courtyard represents the opportunity to acquire an institutionally maintained and operated asset in a one-of-one location. The Property offers meaningful RevPAR upside as it continues to ramp up following the completion of the most recent renovation in 2024. The Hotel saw RevPAR grow 16% from 2024 to 2025. May T-12 RevPAR is up 7% from year end 2025, and HWE expects RevPAR gains from 2025 to 2026 to end the year at 16% once again. New ownership is poised to capitalize on this improved performance following the ramp-up of the Courtyard.</p>
+          <p class="lead" style="max-width:68ch;margin-top:20px">The Courtyard represents the opportunity to acquire an institutionally maintained and operated asset in an irreplaceable location. The Property offers meaningful RevPAR upside as it continues to ramp up following the completion of the most recent renovation in 2024. The Hotel saw RevPAR grow 16% from 2024 to 2025. May T-12 RevPAR is up 7% from year end 2025, and HWE expects RevPAR gains from 2025 to 2026 to end the year at 16% once again. New ownership is poised to capitalize on this improved performance following the ramp-up of the Courtyard.</p>
         </div>
         <img src="images/highlight-05-photo.jpg" alt="Meeting space at the Courtyard"
              style="width:100%;height:460px;object-fit:cover;border-radius:2px;box-shadow:0 24px 80px rgba(0,0,0,.45)" />
@@ -1227,7 +1244,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <div>
           <div class="highlight-eyebrow">Investment Highlight &mdash; 06 / 06</div>
           <h2 class="h2">Clean Investment Offering</h2>
-          <p class="lead" style="max-width:68ch">The non-union, fee-simple interest in the Courtyard is being offered free and clear of existing management and financing, affording new ownership maximum optionality in the future operation and capitalization of the Hotel.</p>
+          <p class="lead" style="max-width:68ch;margin-top:20px">The fee-simple interest in the Courtyard is being offered free and clear of existing management, affording new ownership maximum optionality in the future operation of the Hotel.</p>
         </div>
         <img src="images/highlight-06-photo-side.jpg" alt="Guest room with golf on TV"
              style="width:100%;height:460px;object-fit:cover;border-radius:2px;box-shadow:0 24px 80px rgba(0,0,0,.45)" />
@@ -1241,19 +1258,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
   <!-- BRAND -->
   <section class="section brand-section" id="brand">
     <div class="wrap" style="position:relative">
-      <h2 class="h2" style="color:#fff">The Power of Marriott</h2>
-      <p class="lead" style="color:rgba(255,255,255,.65);max-width:70ch;margin-top:18px">Courtyard by Marriott benefits from the full weight of Marriott International&rsquo;s global distribution, loyalty, and operating infrastructure.</p>
+      <h2 class="h2" style="color:#fff">Dominant Brand &amp; Distribution System</h2>
+      <p class="lead" style="color:rgba(255,255,255,.65);max-width:78ch;margin-top:18px">The Property benefits from its affiliation with Marriott, the world&rsquo;s most recognizable and top-performing hospitality brand. Marriott provides centralized marketing, booking, and rewards systems, providing the Hotel with access to over 270 million Marriott Bonvoy members. Courtyard is a top-tier brand and arguably one of the most valuable franchise brands in the select-service space in the U.S. The brand currently has over 1,000 properties nationwide totaling over 140,000 rooms.</p>
       <div class="brand-stats">
-        <div class="brand-stat"><div class="v">9,000+</div><div class="l">Properties Worldwide</div></div>
-        <div class="brand-stat"><div class="v">30+</div><div class="l">Brands Globally</div></div>
-        <div class="brand-stat"><div class="v">210M+</div><div class="l">Marriott Bonvoy Members</div></div>
-        <div class="brand-stat"><div class="v">#1</div><div class="l">Largest Hotel Company by Rooms</div></div>
+        <div class="brand-stat"><div class="v">270M+</div><div class="l">Marriott Bonvoy Members</div></div>
+        <div class="brand-stat"><div class="v">1,000+</div><div class="l">Courtyard Properties Nationwide</div></div>
+        <div class="brand-stat"><div class="v">140,000+</div><div class="l">Rooms Nationwide</div></div>
       </div>
       <div class="brand-pillars">
-        <div class="pillar"><h3>Marriott Bonvoy Loyalty</h3><p>210M+ active Bonvoy members drive direct bookings and repeat stays through one of the world&rsquo;s largest travel loyalty programs, reducing OTA dependency.</p></div>
-        <div class="pillar"><h3>Brand Recognition</h3><p>Marriott&rsquo;s portfolio spans every segment from luxury to economy, allowing each flag to command rate premiums appropriate to its positioning.</p></div>
-        <div class="pillar"><h3>Global Distribution</h3><p>Marriott&rsquo;s proprietary booking platform and extensive GDS partnerships deliver unmatched channel reach across corporate, group, and leisure segments.</p></div>
-        <div class="pillar"><h3>Operational Excellence</h3><p>Franchisees benefit from Marriott&rsquo;s centralized procurement, revenue management, training infrastructure, and brand-standard enforcement.</p></div>
+        <div class="pillar"><h3>Marriott Bonvoy Loyalty</h3><p>Over 270 million active Bonvoy members drive direct bookings and repeat stays through one of the world&rsquo;s largest travel loyalty programs, reducing OTA dependency.</p></div>
+        <div class="pillar"><h3>Centralized Marketing &amp; Distribution</h3><p>Marriott&rsquo;s centralized marketing, booking, and rewards systems deliver unmatched channel reach across corporate, group, and leisure segments.</p></div>
+        <div class="pillar"><h3>Top-Tier Brand Strength</h3><p>Courtyard is a top-tier brand and arguably one of the most valuable franchise brands in the select-service space in the U.S.</p></div>
+        <div class="pillar"><h3>National Scale</h3><p>The brand currently spans over 1,000 properties nationwide, totaling more than 140,000 rooms, reflecting its position as a leading select-service platform.</p></div>
       </div>
     </div>
   </section>
