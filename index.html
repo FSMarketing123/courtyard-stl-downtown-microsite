@@ -853,9 +853,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
        pointer-events:none;transition:opacity .45s ease;z-index:4}
   .aerial-wrap.open .aerial-scrim{opacity:1;pointer-events:auto}
   .aerial-hotspot{position:absolute;z-index:5;background:transparent;border:none;cursor:pointer;
-       padding:0;border-radius:6px;transition:box-shadow .25s ease,background .25s ease}
-  .aerial-hotspot:hover,.aerial-hotspot:focus-visible{background:rgba(255,255,255,.08);
-       box-shadow:0 0 0 2px rgba(255,255,255,.45);outline:none}
+       padding:0;border-radius:6px}
+  .aerial-hotspot:hover,.aerial-hotspot:focus,.aerial-hotspot:focus-visible{background:transparent;
+       box-shadow:none;outline:none}
   .aerial-popout{position:absolute;z-index:6;top:50%;left:50%;
        width:min(88%,720px);transform:translate(-50%,-46%);opacity:0;pointer-events:none;
        background:var(--navy-lt);border:1px solid var(--divider);border-radius:4px;overflow:hidden;
