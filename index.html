@@ -842,21 +842,35 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .revpar-table tbody td.neg{color:#d98a90}
   .revpar-table tbody td.flat{color:var(--muted)}
   /* Interactive aerial */
-  .aerial-wrap{position:relative;width:100%;overflow:hidden;line-height:0;background:#0d1620}
-  .aerial-base{width:100%;height:auto;display:block}
-  .aerial-overlay{position:absolute;top:0;left:0;width:100%;height:auto;
-       opacity:1;pointer-events:none;z-index:3}
-  .aerial-marker{opacity:.75}
-  @keyframes aerialBlink{0%,100%{opacity:.75}50%{opacity:1}}
-  .aerial-overlay.blink{animation:aerialBlink 1.1s ease-in-out infinite}
+  .aerial-map{--highlight:#ffad32;--highlight-light:#ffe0a3;position:relative;width:100%;
+       overflow:hidden;line-height:0;isolation:isolate;background:#0d1620;margin:0}
+  .aerial-map__image{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+  .aerial-map__overlay{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .property{cursor:pointer;outline:none}
+  .property__shape{fill:var(--highlight);fill-opacity:.46;stroke:var(--highlight-light);stroke-width:3;
+       stroke-opacity:1;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;
+       stroke-dasharray:1;stroke-dashoffset:0;pointer-events:visibleFill;
+       transition:fill-opacity .25s ease;filter:drop-shadow(0 0 7px rgb(255 173 50 / 0))}
+  .property:hover .property__shape,.property:focus-visible .property__shape,.property.is-active .property__shape{
+       stroke-opacity:1;animation:draw-property-outline 2.4s linear infinite;
+       filter:drop-shadow(0 0 7px rgb(255 173 50 / .9))}
+  @keyframes draw-property-outline{
+    0%{stroke-dasharray:.22 .06;stroke-dashoffset:.84}
+    100%{stroke-dasharray:.22 .06;stroke-dashoffset:0}}
+  .property:focus-visible .property__shape{stroke-width:5}
+  .property--hotel .property__shape{fill:#5b382b;stroke:#fff}
+  .property--hotel:hover .property__shape,.property--hotel:focus-visible .property__shape,.property--hotel.is-active .property__shape{
+       filter:drop-shadow(0 0 7px rgb(255 255 255 / .95))}
+  .property-logo{cursor:pointer;pointer-events:auto;outline:none}
+  @media(prefers-reduced-motion:reduce){
+    .property__shape{stroke-opacity:1;transition:fill-opacity .15s ease}
+    .property:hover .property__shape,.property:focus-visible .property__shape,.property.is-active .property__shape{
+         animation:none;stroke-dashoffset:0}}
+  /* Click popout overlay */
   .aerial-scrim{position:absolute;inset:0;background:rgba(6,10,16,.55);opacity:0;
-       pointer-events:none;transition:opacity .45s ease;z-index:4}
-  .aerial-wrap.open .aerial-scrim{opacity:1;pointer-events:auto}
-  .aerial-hotspot{position:absolute;z-index:5;background:transparent;border:none;cursor:pointer;
-       padding:0;border-radius:6px}
-  .aerial-hotspot:hover,.aerial-hotspot:focus,.aerial-hotspot:focus-visible{background:transparent;
-       box-shadow:none;outline:none}
-  .aerial-popout{position:absolute;z-index:6;top:50%;left:50%;
+       pointer-events:none;transition:opacity .45s ease;z-index:7}
+  .aerial-map.open .aerial-scrim{opacity:1;pointer-events:auto}
+  .aerial-popout{position:absolute;z-index:8;top:50%;left:50%;
        width:min(88%,720px);transform:translate(-50%,-46%);opacity:0;pointer-events:none;
        background:var(--navy-lt);border:1px solid var(--divider);border-radius:4px;overflow:hidden;
        box-shadow:0 40px 120px rgba(0,0,0,.6);transition:opacity .4s ease,transform .45s cubic-bezier(.22,.9,.28,1)}
@@ -872,7 +886,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .aerial-popout .po-close{position:absolute;top:12px;right:12px;width:34px;height:34px;
        border-radius:50%;border:none;background:rgba(6,10,16,.55);color:#fff;font-size:20px;
        line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;
-       transition:background .2s ease}
+       transition:background .2s ease;z-index:1}
   .aerial-popout .po-close:hover{background:var(--red)}
   .aerial-legend{position:absolute;top:20px;left:20px;z-index:5;display:flex;flex-direction:column;
        gap:8px;max-width:min(46%,340px)}
@@ -889,8 +903,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
     .aerial-legend{position:static;flex-direction:column;max-width:none;gap:8px;
          padding:12px var(--pad) 2px;background:var(--ink)}
     .aerial-legend-item{background:rgba(255,255,255,.94);backdrop-filter:none}
-    .aerial-popout{width:90%}
-    .aerial-popout .po-body{padding:16px}
   }
 
   .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
@@ -1159,32 +1171,36 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
   <!-- HIGHLIGHT 01 -->
   <section class="highlight-section" style="background:var(--navy);padding:0">
-    <div class="aerial-wrap" id="aerial-wrap">
-      <img class="aerial-base" src="images/aerial-base.jpg" alt="Aerial view of the Courtyard adjacent to America&rsquo;s Center Convention Complex" />
-      <img class="aerial-overlay" src="images/aerial-lbl-courtyard.png" alt="" aria-hidden="true" />
-      <img class="aerial-overlay" src="images/aerial-lbl-america.png" alt="" aria-hidden="true" />
-      <img class="aerial-overlay aerial-marker" id="aerial-mrk-courtyard" src="images/aerial-mrk-courtyard.png" alt="" aria-hidden="true" />
-      <img class="aerial-overlay aerial-marker" id="aerial-mrk-america" src="images/aerial-mrk-america.png" alt="" aria-hidden="true" />
-      <div class="aerial-scrim" id="aerial-scrim"></div>
-      <!-- hotspots: building footprints + label boxes -->
-      <button class="aerial-hotspot" data-key="courtyard" aria-label="View Courtyard property"
-              style="left:51.5%;top:57.5%;width:6%;height:13%"></button>
-      <button class="aerial-hotspot" data-key="courtyard" aria-label="View Courtyard property"
-              style="left:41%;top:13%;width:27%;height:24%"></button>
-      <button class="aerial-hotspot" data-key="america" aria-label="View America&rsquo;s Center"
-              style="left:42%;top:59%;width:12.5%;height:12%"></button>
-      <button class="aerial-hotspot" data-key="america" aria-label="View America&rsquo;s Center"
-              style="left:40.5%;top:39%;width:14%;height:13%"></button>
+    <figure class="aerial-map" id="aerial-map" aria-label="Aerial view of downtown St. Louis">
+      <img class="aerial-map__image" src="images/aerial-interactive-base.jpg"
+           alt="Aerial view of downtown St. Louis near America&rsquo;s Center" width="2048" height="934" />
+      <svg class="aerial-map__overlay" viewBox="0 0 2048 934" preserveAspectRatio="xMidYMid meet" aria-hidden="false">
+        <g id="convention-property" class="property" tabindex="0" role="button" aria-label="Highlight America&rsquo;s Center Convention Complex">
+          <path class="property__shape" pathLength="1"
+            d="M 967.4 562.4 C 979.7 578.0 1003.6 586.0 1003.6 586.0 C 1003.6 586.0 1002.8 587.7 1003.4 587.7 C 1003.6 587.7 1004.1 587.4 1005.0 586.5 C 1007.4 584.1 1011.1 581.1 1017.7 581.1 C 1019.6 581.1 1021.6 581.4 1024.0 581.9 C 1034.7 584.5 1033.7 595.2 1033.7 595.2 L 1037.3 597.4 C 1050.6 602.1 1092.4 604.3 1092.4 604.3 L 1092.4 644.7 L 1072.0 659.7 L 1090.4 665.4 L 1090.4 670.5 L 1086.0 673.3 L 1086.0 684.8 L 970.2 787.3 L 973.5 790.1 L 955.4 805.9 L 959.5 810.2 L 952.6 816.1 L 1030.9 845.1 L 1030.9 867.3 L 972.8 923.7 L 997.0 934.0 L 994.7 937.4 L 863.1 937.4 L 681.0 866.3 L 681.0 854.1 L 686.4 850.8 L 636.4 834.2 L 636.4 826.0 L 623.1 821.2 L 623.1 814.0 L 647.6 794.2 L 647.6 789.1 L 731.5 726.9 L 797.8 753.1 L 863.4 698.3 L 818.2 682.0 L 834.6 670.5 L 834.6 665.4 L 850.9 652.7 L 925.6 675.6 L 958.0 648.9 L 882.4 625.2 L 882.9 603.5 L 926.6 570.7 L 950.4 578.2 L 957.7 572.9 L 957.9 568.3 Z" />
+        </g>
+        <g id="hotel-property" class="property property--hotel" tabindex="0" role="button" aria-label="Highlight Courtyard by Marriott St. Louis Downtown Convention Center">
+          <path class="property__shape" pathLength="1"
+            d="M 1136.7 630.0 L 1137.3 560.3 L 1123.5 557.3 L 1120.2 556.8 L 1114.4 555.0 L 1100.9 564.5 L 1100.9 567.6 L 1098.6 570.2 L 1098.6 572.7 L 1094.7 575.9 L 1094.7 659.2 L 1110.8 664.4 L 1110.8 652.4 Z" />
+        </g>
+        <image class="property-logo" href="images/aerial-logo-courtyard.svg" x="846" y="130" width="540" height="423"
+               preserveAspectRatio="xMidYMid meet" tabindex="0" role="button"
+               data-property-target="hotel-property" aria-label="Courtyard by Marriott St. Louis Downtown Convention Center" />
+        <image class="property-logo" href="images/aerial-logo-americas.svg" x="838" y="377" width="259" height="185"
+               preserveAspectRatio="xMidYMid meet" tabindex="0" role="button"
+               data-property-target="convention-property" aria-label="America&rsquo;s Center" />
+      </svg>
       <div class="aerial-legend" id="aerial-legend">
-        <div class="aerial-legend-item" data-key="courtyard" style="border-left-color:#4E4A46" tabindex="0" role="button">
-          <span class="aerial-legend-swatch" style="background:#4E4A46"></span>
-          <span class="aerial-legend-text">Courtyard by Marriott<span>Subject property &mdash; click to explore</span></span>
+        <div class="aerial-legend-item" data-key="courtyard" data-property="hotel-property" style="border-left-color:#5b382b" tabindex="0" role="button">
+          <span class="aerial-legend-swatch" style="background:#5b382b"></span>
+          <span class="aerial-legend-text">Courtyard by Marriott<span>Subject property &mdash; click to view details</span></span>
         </div>
-        <div class="aerial-legend-item" data-key="america" style="border-left-color:#E7A24C" tabindex="0" role="button">
-          <span class="aerial-legend-swatch" style="background:#E7A24C"></span>
-          <span class="aerial-legend-text">America&rsquo;s Center Convention Complex<span>Adjacent demand driver &mdash; click to explore</span></span>
+        <div class="aerial-legend-item" data-key="america" data-property="convention-property" style="border-left-color:#ffad32" tabindex="0" role="button">
+          <span class="aerial-legend-swatch" style="background:#ffad32"></span>
+          <span class="aerial-legend-text">America&rsquo;s Center Convention Complex<span>Adjacent demand driver &mdash; click to view details</span></span>
         </div>
       </div>
+      <div class="aerial-scrim" id="aerial-scrim"></div>
       <div class="aerial-popout" id="aerial-popout" role="dialog" aria-modal="true" aria-labelledby="aerial-po-title">
         <button class="po-close" id="aerial-po-close" aria-label="Close">&times;</button>
         <img id="aerial-po-img" src="" alt="" />
@@ -1194,7 +1210,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
           <p class="po-blurb" id="aerial-po-blurb"></p>
         </div>
       </div>
-    </div>
+    </figure>
     <div class="section" style="padding-top:56px">
       <div class="wrap">
         <div class="highlight-eyebrow">Investment Highlight &mdash; 01 / 06</div>
@@ -1586,23 +1602,65 @@ svg.leaflet-image-layer.leaflet-interactive path {
         updateNavCollapse();
       }
 
-      // Interactive aerial: markers/logos blink slowly on hover; clicking a
-      // logo, property, or legend row toggles a photo + blurb popout open/closed.
+      // Interactive aerial: SVG property outlines animate on hover/focus. The
+      // legend rows, the property shapes, and the on-map logos are all linked so
+      // pointing at any one of them highlights the matching property everywhere.
       (function () {
-        var wrap = document.getElementById("aerial-wrap");
-        if (!wrap) return;
-        var scrim = document.getElementById("aerial-scrim");
-        var popout = document.getElementById("aerial-popout");
-        var ovs = {
-          courtyard: document.getElementById("aerial-mrk-courtyard"),
-          america: document.getElementById("aerial-mrk-america")
+        var map = document.getElementById("aerial-map");
+        if (!map) return;
+        // key -> the SVG property group it controls
+        var props = {
+          courtyard: document.getElementById("hotel-property"),
+          america: document.getElementById("convention-property")
         };
+        function keyForProp(id) { return id === "hotel-property" ? "courtyard" : "america"; }
+        function legendFor(key) {
+          return map.querySelector('.aerial-legend-item[data-key="' + key + '"]');
+        }
+        function setActive(key, on) {
+          if (props[key]) props[key].classList.toggle("is-active", on);
+          var li = legendFor(key);
+          if (li) li.classList.toggle("active", on);
+        }
+
+        // Legend rows -> highlight the matching property (+ itself)
+        map.querySelectorAll(".aerial-legend-item").forEach(function (li) {
+          var k = li.dataset.key;
+          li.addEventListener("mouseenter", function () { setActive(k, true); });
+          li.addEventListener("mouseleave", function () { setActive(k, false); });
+          li.addEventListener("focus", function () { setActive(k, true); });
+          li.addEventListener("blur", function () { setActive(k, false); });
+        });
+
+        // Property shapes -> highlight the matching legend row (reciprocal)
+        Object.keys(props).forEach(function (k) {
+          var el = props[k];
+          if (!el) return;
+          el.addEventListener("mouseenter", function () { var li = legendFor(k); if (li) li.classList.add("active"); });
+          el.addEventListener("mouseleave", function () { var li = legendFor(k); if (li) li.classList.remove("active"); });
+          el.addEventListener("focus", function () { var li = legendFor(k); if (li) li.classList.add("active"); });
+          el.addEventListener("blur", function () { var li = legendFor(k); if (li) li.classList.remove("active"); });
+        });
+
+        // On-map logos -> highlight the property shape + legend row
+        map.querySelectorAll("[data-property-target]").forEach(function (logo) {
+          var k = keyForProp(logo.dataset.propertyTarget);
+          var on = function () { setActive(k, true); };
+          var off = function () { setActive(k, false); };
+          logo.addEventListener("pointerenter", on);
+          logo.addEventListener("pointerleave", off);
+          logo.addEventListener("focus", on);
+          logo.addEventListener("blur", off);
+        });
+
+        // Click any element for a property (legend row, logo, or outlined shape)
+        // to open a popout overlay with that property's photo + blurb.
         var DATA = {
           courtyard: {
             eyebrow: "Subject Property",
             title: "Courtyard by Marriott",
             img: "images/pop-courtyard.jpg",
-            blurb: "The 165-room Courtyard St. Louis Downtown/Convention Center sits directly adjacent to America’s Center, the closest hotel to the complex and steps from the region’s defining downtown attractions."
+            blurb: "The 165-room Courtyard St. Louis Downtown/Convention Center sits directly adjacent to America’s Center — the closest hotel to the complex and steps from the region’s defining downtown attractions."
           },
           america: {
             eyebrow: "Demand Driver",
@@ -1611,59 +1669,60 @@ svg.leaflet-image-layer.leaflet-interactive path {
             blurb: "The region’s premier convention venue spans 2.2M+ square feet and, following its recent expansion, hosts an average of 109 events and 600,000+ attendees a year — a powerful, reliable base of group and business demand right next door."
           }
         };
+        var scrim = document.getElementById("aerial-scrim");
+        var popout = document.getElementById("aerial-popout");
         var poImg = document.getElementById("aerial-po-img");
         var poEyebrow = document.getElementById("aerial-po-eyebrow");
         var poTitle = document.getElementById("aerial-po-title");
         var poBlurb = document.getElementById("aerial-po-blurb");
-        var hotspots = wrap.querySelectorAll(".aerial-hotspot");
-        var legendItems = document.querySelectorAll("#aerial-legend .aerial-legend-item");
         var openKey = null;
-
-        function setBlink(key, on) {
-          if (openKey) return; // don't blink while a popout is open
-          if (ovs[key]) ovs[key].classList.toggle("blink", on);
-        }
-        function openAerial(key) {
-          if (!DATA[key]) return;
-          openKey = key;
-          Object.keys(ovs).forEach(function (k) { ovs[k].classList.remove("blink"); });
-          wrap.classList.add("open");
-          legendItems.forEach(function (li) { li.classList.toggle("active", li.dataset.key === key); });
+        function openPopout(key) {
           var d = DATA[key];
+          if (!d) return;
+          openKey = key;
           poImg.src = d.img; poImg.alt = d.title;
           poEyebrow.textContent = d.eyebrow;
           poTitle.textContent = d.title;
           poBlurb.textContent = d.blurb;
+          map.classList.add("open");
           popout.classList.add("show");
         }
-        function closeAerial() {
+        function closePopout() {
           openKey = null;
-          wrap.classList.remove("open");
+          map.classList.remove("open");
           popout.classList.remove("show");
-          legendItems.forEach(function (li) { li.classList.remove("active"); });
         }
-        function toggleAerial(key) { if (openKey === key) closeAerial(); else openAerial(key); }
+        function togglePopout(key) { if (openKey === key) closePopout(); else openPopout(key); }
 
-        hotspots.forEach(function (h) {
-          var k = h.dataset.key;
-          h.addEventListener("mouseenter", function () { setBlink(k, true); });
-          h.addEventListener("mouseleave", function () { setBlink(k, false); });
-          h.addEventListener("click", function (e) { e.stopPropagation(); toggleAerial(k); });
-        });
-        legendItems.forEach(function (li) {
+        // legend rows
+        map.querySelectorAll(".aerial-legend-item").forEach(function (li) {
           var k = li.dataset.key;
-          li.addEventListener("mouseenter", function () { setBlink(k, true); });
-          li.addEventListener("mouseleave", function () { setBlink(k, false); });
-          li.addEventListener("click", function () { toggleAerial(k); });
+          li.addEventListener("click", function () { togglePopout(k); });
           li.addEventListener("keydown", function (e) {
-            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleAerial(k); }
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); togglePopout(k); }
           });
         });
-        document.getElementById("aerial-po-close").addEventListener("click", function (e) { e.stopPropagation(); closeAerial(); });
-        poImg.style.cursor = "pointer";
-        poImg.addEventListener("click", function (e) { e.stopPropagation(); closeAerial(); });
-        scrim.addEventListener("click", closeAerial);
-        document.addEventListener("keydown", function (e) { if (e.key === "Escape" && openKey) closeAerial(); });
+        // property shapes
+        Object.keys(props).forEach(function (k) {
+          var el = props[k];
+          if (!el) return;
+          el.addEventListener("click", function () { togglePopout(k); });
+          el.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); togglePopout(k); }
+          });
+        });
+        // on-map logos
+        map.querySelectorAll("[data-property-target]").forEach(function (logo) {
+          var k = keyForProp(logo.dataset.propertyTarget);
+          logo.addEventListener("click", function () { togglePopout(k); });
+          logo.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); togglePopout(k); }
+          });
+        });
+        document.getElementById("aerial-po-close").addEventListener("click", closePopout);
+        popout.addEventListener("click", closePopout);
+        scrim.addEventListener("click", closePopout);
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape" && openKey) closePopout(); });
       })();
 
       var heroSection = document.getElementById("hero");
