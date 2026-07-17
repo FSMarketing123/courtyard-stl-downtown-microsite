@@ -877,18 +877,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .aerial-legend{position:absolute;top:20px;left:20px;z-index:5;display:flex;flex-direction:column;
        gap:8px;max-width:min(46%,340px)}
   .aerial-legend-item{display:flex;align-items:center;gap:11px;cursor:pointer;
-       background:rgba(21,34,52,.82);backdrop-filter:blur(6px);border:1px solid var(--divider);
+       background:rgba(255,255,255,.94);backdrop-filter:blur(6px);border:1px solid rgba(0,0,0,.08);
        border-left-width:4px;border-radius:2px;padding:11px 15px;
        transition:transform .2s ease,background .2s ease}
-  .aerial-legend-item:hover{background:rgba(34,54,79,.92);transform:translateY(-1px)}
-  .aerial-legend-item.active{box-shadow:0 0 0 2px rgba(255,255,255,.3)}
-  .aerial-legend-swatch{width:15px;height:15px;border-radius:3px;flex-shrink:0}
-  .aerial-legend-text{font-family:var(--font-body);font-size:12.5px;color:#fff;font-weight:500;line-height:1.25}
-  .aerial-legend-text span{display:block;font-size:10.5px;color:var(--muted);font-weight:400;margin-top:2px}
+  .aerial-legend-item:hover{background:#fff;transform:translateY(-1px)}
+  .aerial-legend-item.active{box-shadow:0 0 0 2px rgba(33,67,138,.5)}
+  .aerial-legend-swatch{width:15px;height:15px;border-radius:3px;flex-shrink:0;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+  .aerial-legend-text{font-family:var(--font-body);font-size:12.5px;color:var(--ink);font-weight:600;line-height:1.25}
+  .aerial-legend-text span{display:block;font-size:10.5px;color:#5c6b7a;font-weight:400;margin-top:2px}
   @media(max-width:700px){
     .aerial-legend{position:static;flex-direction:column;max-width:none;gap:8px;
          padding:12px var(--pad) 2px;background:var(--ink)}
-    .aerial-legend-item{background:var(--navy-lt);backdrop-filter:none}
+    .aerial-legend-item{background:rgba(255,255,255,.94);backdrop-filter:none}
     .aerial-popout{width:90%}
     .aerial-popout .po-body{padding:16px}
   }
