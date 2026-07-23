@@ -921,8 +921,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   /* Location */
-  .location-split{display:grid;grid-template-columns:1fr 1fr;align-items:center}
-  .location-info{background:var(--ink);padding:64px clamp(32px,4vw,64px) 64px var(--pad);
+  .location-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;
+       padding-left:max(var(--pad), (100% - 1280px) / 2)}
+  .location-info{background:var(--ink);padding:64px clamp(32px,4vw,64px) 64px 0;
        display:flex;flex-direction:column;justify-content:center}
   .location-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;padding:40px}
   .loc-card{position:relative;overflow:hidden;cursor:pointer;height:230px;border-radius:2px}
@@ -1020,7 +1021,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     #demand-map{min-height:360px}
     .brand-stats{grid-template-columns:repeat(2,1fr)}
     .brand-pillars{grid-template-columns:1fr}
-    .location-split{grid-template-columns:1fr !important}
+    .location-split{grid-template-columns:1fr !important;padding-left:0 !important}
     .location-cards{gap:12px;padding:24px}
     .loc-card{height:180px}
     .location-info{padding:48px var(--pad) !important}
