@@ -678,14 +678,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <style>
   :root{
-    --ink:#0d1620;        --ink-rgb:13,22,32;
-    --navy:#152234;       --navy-rgb:21,34,52;
-    --navy-lt:#1d3048;
-    --blue:#21438A;       --blue-mid:#1a3470;  --blue-lt:#2d57b0;
-    --red:#BE2D37;        --red-lt:#d63d48;
-    --dark-gray:#56565B;
-    --cream:#ffffff;      --off-white:#eaeef4;  --muted:#8ba0b8;
-    --divider:rgba(33,67,138,.2);
+    --ink:#2B2420;        --ink-rgb:43,36,32;
+    --navy:#423B37;       --navy-rgb:66,59,55;
+    --navy-lt:#544A43;
+    --blue:#5A4636;       --blue-mid:#48372A;  --blue-lt:#6E5641;
+    --red:#9A5238;        --red-lt:#B06446;
+    --dark-gray:#6B5D52;
+    --cream:#ffffff;      --off-white:#E9E0D3;  --muted:#B5A794;
+    --divider:rgba(180,150,110,.22);
     --font-cormorant:"Cormorant Garamond",Georgia,serif;
     --font-body:"Poppins",system-ui,sans-serif;
     --pad:clamp(24px,7vw,100px);
@@ -843,7 +843,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .revpar-table tbody td.flat{color:var(--muted)}
   /* Interactive aerial */
   .aerial-map{--highlight:#ffad32;--highlight-light:#ffe0a3;position:relative;width:100%;
-       overflow:hidden;line-height:0;isolation:isolate;background:#0d1620;margin:0}
+       overflow:hidden;line-height:0;isolation:isolate;background:var(--ink);margin:0}
   .aerial-map__stage{position:relative;line-height:0}
   .aerial-map__image{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
   .aerial-map__overlay{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
@@ -896,7 +896,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
        border-left-width:4px;border-radius:2px;padding:11px 15px;
        transition:transform .2s ease,background .2s ease}
   .aerial-legend-item:hover{background:#fff;transform:translateY(-1px)}
-  .aerial-legend-item.active{box-shadow:0 0 0 2px rgba(33,67,138,.5)}
+  .aerial-legend-item.active{box-shadow:0 0 0 2px rgba(154,82,56,.6)}
   .aerial-legend-swatch{width:15px;height:15px;border-radius:3px;flex-shrink:0;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
   .aerial-legend-text{font-family:var(--font-body);font-size:12.5px;color:var(--ink);font-weight:600;line-height:1.25}
   .aerial-legend-text span{display:block;font-size:10.5px;color:#5c6b7a;font-weight:400;margin-top:2px}
@@ -907,7 +907,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 
   .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
-  .logo-tile{background:#152234;border-radius:4px;padding:24px;height:100px;
+  .logo-tile{background:var(--navy);border-radius:4px;padding:24px;height:100px;
        display:flex;align-items:center;justify-content:center}
   .logo-tile img{max-width:75%;max-height:44px;display:block}
   .logo-tile:hover{animation:wiggle .5s ease}
@@ -977,7 +977,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
        border:none;padding:9px 16px;font-family:var(--font-body);font-size:10.5px;font-weight:600;
        letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:1px}
   .leaflet-popup-tip-container{display:none}
-  .num-pin{background:#0d1620;color:#fff;border-radius:50%;width:26px;height:26px;display:flex;
+  .num-pin{background:var(--ink);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;
        align-items:center;justify-content:center;font-size:11px;font-family:var(--font-body);
        border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4)}
   .hotel-pin{background:var(--blue);color:#fff;border-radius:50%;width:34px;height:34px;display:flex;
@@ -985,7 +985,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
        box-shadow:0 2px 8px rgba(0,0,0,.5)}
 
   /* Brand */
-  .brand-section{background:var(--blue);position:relative;overflow:hidden}
+  .brand-section{background:var(--navy);position:relative;overflow:hidden}
   .brand-section::before{content:"";position:absolute;top:-20%;right:-10%;width:60%;height:140%;
        background:radial-gradient(circle, rgba(255,255,255,.06), transparent 70%);pointer-events:none}
   .brand-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:40px 0 56px}
@@ -1004,7 +1004,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 
   /* Footer */
-  .footer{background:var(--blue)}
+  .footer{background:var(--navy);position:relative;overflow:hidden}
+  .footer::before{content:"";position:absolute;inset:0;
+       background:url(images/texture-concrete.png) repeat fixed;background-size:520px;
+       mix-blend-mode:multiply;opacity:.8;pointer-events:none;z-index:0}
+  .footer > *{position:relative;z-index:1}
+  /* Concrete texture overlay on the main content sections (sits on the section
+     background color, behind all text and photos) */
+  #overview, .highlight-section{position:relative;overflow:hidden}
+  #overview::after, .highlight-section::after, .brand-section::after{
+       content:"";position:absolute;inset:0;
+       background:url(images/texture-concrete.png) repeat fixed;background-size:520px;
+       mix-blend-mode:multiply;opacity:.8;pointer-events:none;z-index:0}
+  #overview > *, .highlight-section > *, .brand-section > *{position:relative;z-index:1}
   .footer-grid{display:grid;grid-template-columns:auto 1fr;gap:clamp(48px,8vw,120px);align-items:center}
   .footer-logo{display:block;width:clamp(150px,14vw,210px);height:auto}
   .footer-col-title{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.55);
